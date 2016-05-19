@@ -39,7 +39,7 @@ Sort by :
   </tr>
   <tr ng-repeat = "player in filtered = (players | filter: query | orderBy : orderProp)">
   	<td style="color: #ee1b1b;">{{player.rank}}</td>
-    <td class="name">{{player.name}}</td>
+    <td><a class = "name" href="{{player.url}}" target="_blank">{{player.name}}</a></td>
     <td class="country">{{player.country}}</td>
     <td>{{player.age}}</td>		
     <td class="points">{{player.points}}</td>
@@ -51,7 +51,7 @@ Sort by :
 
 	atpApp.controller('Ctrl',function($http,$scope) {
 
-		$http.get("players.php").success(function(data){
+		$http.get("players.json").success(function(data){
 
 			$scope.players = data;
 		});

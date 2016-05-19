@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Http Example</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+	<link rel = "shortcut icon" href = "atp.png">
+	<link rel="stylesheet" href="app.css">
+</head>
+<body ng-app="atp" ng-controller="Ctrl">
+<h2 class="header">ATP Rankings</h2>
+Search: <input ng-model="query">
+Sort by :
+<select ng-model="orderProp">
+  <option value="name">Alphabetical</option>
+  <option value="country">Country Alphabetical</option>
+  <option value="rank">rank</option>
+  <option value="age">Youngest</option>
+</select>
+<br><br>
+
+<!-- <ol>
+	<p>Total number of players are {{filtered.length}}</p>
+	<li ng-repeat = "player in filtered = (players | filter: query | orderBy : orderProp)">
+      <span class="name">{{player.name }} </span>(
+      <span class="country">{{player.country}}</span>) -
+      <span class="points">{{player.points}}</span> - 
+      <span class="age">{{player.age}}</span>
+      <br><br>
+    </li>
+</ol> -->
+
+<table style="width: 100%;">
+	<tr>
+    <th>Rank</th>
+    <th>Player Name</th>
+    <th>Country</th>
+    <th>Age</th>		
+    <th>Points</th>
+  </tr>
+  <tr ng-repeat = "player in filtered = (players | filter: query | orderBy : orderProp)">
+  	<td style="color: #ee1b1b;">{{player.rank}}</td>
+    <td class="name">{{player.name}}</td>
+    <td class="country">{{player.country}}</td>
+    <td>{{player.age}}</td>		
+    <td class="points">{{player.points}}</td>
+</table>
+
+
+<script type="text/javascript">
+	var atpApp = angular.module('atp',[]);
+
+	atpApp.controller('Ctrl',function($http,$scope) {
+
+		$http.get("players.php").success(function(data){
+
+			$scope.players = data;
+		});
+
+		$scope.orderProp = 'rank';
+		// body...
+	})
+</script>
+</body>
+</html>
